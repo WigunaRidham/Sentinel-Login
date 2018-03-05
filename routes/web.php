@@ -1,0 +1,34 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::group(['middleware'=>'visitors'],function(){
+	
+	Route::get('/register','RegistrationController@register');
+
+	Route::post('/register', 'RegistrationController@postRegister');
+
+	Route::get('/login', 'LoginController@Login');
+
+	Route::post('/login', 'LoginController@postLogin');
+});
+
+Route::post('/logout', 'LoginController@logout');
+
+Route::get('/earnings', 'AdminController@earnings')->middleware('admin');
+
+Route::get('/tasks', 'ManagerController@tasks')->middleware('managers');
+
+Route::get('/activate/{email}/{activationCode}', 'ActivationController@activate');
